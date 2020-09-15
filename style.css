@@ -1,4 +1,4 @@
-.displayQuestions
+.displayQuestions, .results
 {
     width: 600px;
     margin: auto;
@@ -8,4 +8,16 @@ body
 {
     font-size: 18px;
     line-height: 24px;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #fcfcfc;
+}
+
+h1
+{
+    text-align: center;
+}
+
+.timer
+{
+    float: right;
 }
