@@ -10,6 +10,7 @@ var startButton = document.createElement("button");
 // Declaring global variables
 var timer = 75;
 var index = 0;
+var questionTimer;
 
 // Function that loads content when page first loads
 function openingPage()
@@ -32,26 +33,35 @@ function highscoresPage()
 function startQuiz()
 {
     // Displaying timer to screen
-    showTimer();
+    showTimer("start");
     nextQuestion();
 
 }
 
-function showTimer()
+function showTimer(string)
 {
     timerEl.textContent = "Time: " + timer;
-    var questionTimer = setInterval(function()
+    console.log(string);
+    if (string == "stop")
     {
-        // Decreasing timer by 1 second
-        timer--;
-        //Displaying new time left
-        timerEl.textContent = "Time: " + timer;
-        
-        if (timer <= 0)
+        clearInterval(questionTimer);
+    }
+    else
+    {
+        questionTimer = setInterval(function()
         {
-            clearInterval(questionTimer);
-        }
-    }, 1000);
+            // Decreasing timer by 1 second
+            timer--;
+            //Displaying new time left
+            timerEl.textContent = "Time: " + timer;
+            
+            if (timer <= 0)
+            {
+                clearInterval(questionTimer);
+            }
+        }, 1000);
+    }
+    
 }
 
 function nextQuestion()
@@ -109,10 +119,22 @@ function checkAnswer(event)
         resultsEl.append(resultText);
         setTimeout(function(){ resultsEl.setAttribute("style", "display: none;") }, 1000);
     }
-    index++;
-    // Show next question
-    nextQuestion();
+    if (index >= questions.length - 1)
+    {
+        stopGame();
+    }
+    else
+    {
+        index++;
+         // Show next question
+        nextQuestion();
+    }
 
+}
+
+function stopGame()
+{
+    showTimer("stop");
 }
 
 startButton.addEventListener("click", startQuiz);
