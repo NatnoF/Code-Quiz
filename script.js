@@ -240,11 +240,11 @@ startButton.addEventListener("click", startQuiz);
 var path = window.location.pathname;
 var page = path.split("/").pop();
 
-if (page == "index.html")
+if (page == "zHighscores.html")
 {
-    openingPage();
+    highscoresPage();
 }
 else
 {
-    highscoresPage();
+    openingPage();
 }
