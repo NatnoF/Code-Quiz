@@ -1,3 +1,10 @@
+*,
+*::before,
+*::after 
+{
+  box-sizing: border-box;
+}
+
 .displayQuestions, .results
 {
     width: 600px;
@@ -20,4 +27,32 @@ h1
 .timer
 {
     float: right;
+}
+
+li {
+    height: 50px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: indigo;
+    opacity: 33%;
+    color: white;
+    font-size: 1.5em;
+    line-height: 1.5;
+  }
+
+  li:before {
+    content: "\200B";
+    position: absolute;
+  }
+  
+  li::after {
+    content: " ";
+    display: block;
+    clear: both;
+  }
+
+  ul, li{
+    list-style:none;
+    list-style-type:none;
 }

@@ -7,12 +7,14 @@ var resultsEl = document.querySelector(".results");
 var mainDisplay = document.createElement("h2");
 var startButton = document.createElement("button");
 var submitButton = document.createElement("button");
+var highscore = document.createElement("input"); 
 var subDisplay = document.createElement("p");
 
 // Declaring global variables
 var timer = 75;
 var index = 0;
 var questionTimer;
+var highscores = [];
 
 // Function that loads content when page first loads
 function openingPage()
@@ -25,13 +27,48 @@ function openingPage()
     startButton.setAttribute("style", "background-color: indigo; color: white; border-radius: 5px; cursor: pointer; display: flex; justify-content: center; margin: 0 auto;");
     // Adding both to screen
     displayQuestionEl.append(mainDisplay, startButton);
+
+    var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
+
+    // If highscores were retrieved from localStorage, update the highscores array to it
+    if (storedHighscores !== null) 
+    {
+        highscores = storedHighscores;
+    }
 }
 
 function highscoresPage()
 {
-    mainDisplay.textContent = "TESTING";
-}
+    var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
 
+    // If highscores were retrieved from localStorage, update the highscores array to it
+    if (storedHighscores !== null) 
+    {
+        highscores = storedHighscores;
+    }
+    // Render a new li for each highscore
+    for (var i = 0; i < highscores.length; i++) 
+    {
+        var highscore = highscores[i];
+
+        var li = document.createElement("li");
+        li.textContent = highscore;
+        li.setAttribute("data-index", i);
+
+        displayQuestionEl.append(li);
+    }
+
+    submitButton.textContent = "Go Back";
+    submitButton.setAttribute("style", "background-color: indigo; color: white; border-radius: 5px; cursor: pointer; margin-left: 5px;");
+    displayQuestionEl.append(submitButton);
+
+    submitButton.addEventListener("click", function(event) 
+    {
+        event.preventDefault();
+        location.href="index.html";
+
+    });
+}
 function startQuiz()
 {
     // Displaying timer to screen
@@ -43,7 +80,7 @@ function startQuiz()
 function showTimer(string)
 {
     timerEl.textContent = "Time: " + timer;
-    
+
     if (string == "stop")
     {
         clearInterval(questionTimer);
@@ -144,26 +181,47 @@ function stopGame()
     mainDisplay.textContent = "All Done!"
     subDisplay.textContent = "Your final score is: " + timer;
     // Making an input for the user's initials
-    var highscore = document.createElement("input"); 
     highscore.setAttribute("type", "text"); 
     highscore.setAttribute("name", "FullName"); 
     highscore.setAttribute("placeholder", "Enter Initials");
+    highscore.setAttribute("id", "highscore-text")
     // Creating the submit button
     submitButton.textContent = "Submit";
     submitButton.setAttribute("style", "background-color: indigo; color: white; border-radius: 5px; cursor: pointer; margin-left: 5px;");
     // Making all this appear on screen
     displayQuestionEl.append(mainDisplay, subDisplay, highscore, submitButton);
+
+    var highscore_text = document.querySelector("#highscore-text");
+
+    submitButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        
+        var highscoreText = highscore_text.value.trim() + ": " + timer;
+      
+        // Return from function early if submitted highscoreText is blank
+        if (highscoreText === "") 
+        {
+          return;
+        }
+      
+        // Add new highscoreText to todos array
+        highscores.push(highscoreText);
+        console.log(highscores.length);
+        
+        // Store updated todos in localStorage and send them to highscore page
+        saveHighscore();
+        location.href="highscores.html";
+
+      });
    
 }
 
 function saveHighscore()
 {
-    console.log("Does nothing for now!");
+    localStorage.setItem("highscores", JSON.stringify(highscores));
 }
 
 startButton.addEventListener("click", startQuiz);
-
-submitButton.addEventListener("click", saveHighscore);
 
 // Detecting which html the user is on
 var path = window.location.pathname;
