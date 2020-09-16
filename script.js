@@ -6,6 +6,8 @@ var resultsEl = document.querySelector(".results");
 // Creating dynamic elements
 var mainDisplay = document.createElement("h2");
 var startButton = document.createElement("button");
+var submitButton = document.createElement("button");
+var subDisplay = document.createElement("p");
 
 // Declaring global variables
 var timer = 75;
@@ -41,7 +43,7 @@ function startQuiz()
 function showTimer(string)
 {
     timerEl.textContent = "Time: " + timer;
-    console.log(string);
+    
     if (string == "stop")
     {
         clearInterval(questionTimer);
@@ -105,7 +107,7 @@ function checkAnswer(event)
         resultText.textContent = "Correct!";
         resultText.setAttribute("style", "border-top: 3px solid gray; opacity: 0.33; font-style: italic; padding-top: 5px;");
         resultsEl.append(resultText);
-        setTimeout(function(){ resultsEl.setAttribute("style", "display: none;") }, 2000);
+        setTimeout(function(){ resultsEl.setAttribute("style", "display: none;") }, 1000);
     }
     else
     {
@@ -119,6 +121,7 @@ function checkAnswer(event)
         resultsEl.append(resultText);
         setTimeout(function(){ resultsEl.setAttribute("style", "display: none;") }, 1000);
     }
+    // Checking to see if they've reached the end of the questions, otherwise it will continue asking more questions.
     if (index >= questions.length - 1)
     {
         stopGame();
@@ -135,9 +138,32 @@ function checkAnswer(event)
 function stopGame()
 {
     showTimer("stop");
+    // Clearing screen
+    displayQuestionEl.textContent = "";
+    // Final screen text
+    mainDisplay.textContent = "All Done!"
+    subDisplay.textContent = "Your final score is: " + timer;
+    // Making an input for the user's initials
+    var highscore = document.createElement("input"); 
+    highscore.setAttribute("type", "text"); 
+    highscore.setAttribute("name", "FullName"); 
+    highscore.setAttribute("placeholder", "Enter Initials");
+    // Creating the submit button
+    submitButton.textContent = "Submit";
+    submitButton.setAttribute("style", "background-color: indigo; color: white; border-radius: 5px; cursor: pointer; margin-left: 5px;");
+    // Making all this appear on screen
+    displayQuestionEl.append(mainDisplay, subDisplay, highscore, submitButton);
+   
+}
+
+function saveHighscore()
+{
+    console.log("Does nothing for now!");
 }
 
 startButton.addEventListener("click", startQuiz);
+
+submitButton.addEventListener("click", saveHighscore);
 
 // Detecting which html the user is on
 var path = window.location.pathname;
