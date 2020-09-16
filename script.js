@@ -223,7 +223,7 @@ function stopGame()
         
         // Store updated highscores in localStorage and send them to highscore page
         saveHighscore();
-        location.href="zHighscores.html";
+        location.href="highscores.html";
 
       });
    
@@ -240,7 +240,7 @@ startButton.addEventListener("click", startQuiz);
 var path = window.location.pathname;
 var page = path.split("/").pop();
 
-if (page == "zHighscores.html")
+if (page == "highscores.html")
 {
     highscoresPage();
 }
