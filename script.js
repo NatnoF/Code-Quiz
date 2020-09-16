@@ -223,7 +223,7 @@ function stopGame()
         
         // Store updated highscores in localStorage and send them to highscore page
         saveHighscore();
-        location.href="highscores.html";
+        location.href="zHighscores.html";
 
       });
    
