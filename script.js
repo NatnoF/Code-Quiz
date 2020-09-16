@@ -204,11 +204,11 @@ function stopGame()
           return;
         }
       
-        // Add new highscoreText to todos array
+        // Add new highscoreText to highscores array
         highscores.push(highscoreText);
         console.log(highscores.length);
         
-        // Store updated todos in localStorage and send them to highscore page
+        // Store updated highscores in localStorage and send them to highscore page
         saveHighscore();
         location.href="highscores.html";
 
