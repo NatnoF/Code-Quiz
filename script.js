@@ -7,6 +7,7 @@ var resultsEl = document.querySelector(".results");
 var mainDisplay = document.createElement("h2");
 var startButton = document.createElement("button");
 var submitButton = document.createElement("button");
+var clearButton = document.createElement("button");
 var highscore = document.createElement("input"); 
 var subDisplay = document.createElement("p");
 
@@ -39,6 +40,7 @@ function openingPage()
 
 function highscoresPage()
 {
+    displayQuestionEl.textContent = "";
     var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
 
     // If highscores were retrieved from localStorage, update the highscores array to it
@@ -59,14 +61,25 @@ function highscoresPage()
     }
 
     submitButton.textContent = "Go Back";
-    submitButton.setAttribute("style", "background-color: indigo; color: white; border-radius: 5px; cursor: pointer; margin-left: 5px;");
-    displayQuestionEl.append(submitButton);
+    submitButton.setAttribute("style", "background-color: indigo; color: white; border-radius: 5px; cursor: pointer; margin-right: 5px; margin-top: 10px;");
+    clearButton.textContent = "Clear Highscores";
+    clearButton.setAttribute("style", "background-color: indigo; color: white; border-radius: 5px; cursor: pointer; margin-right: 5px; margin-top: 10px;");
+
+    displayQuestionEl.append(submitButton, clearButton);
 
     submitButton.addEventListener("click", function(event) 
     {
         event.preventDefault();
         location.href="index.html";
 
+    });
+
+    clearButton.addEventListener("click", function(event) 
+    {
+        event.preventDefault();
+        highscores = [];
+        saveHighscore();
+        highscoresPage();
     });
 }
 function startQuiz()
